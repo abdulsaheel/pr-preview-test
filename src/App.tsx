@@ -22,7 +22,7 @@ function App() {
           count is {count}
         </button>
         <p>
-          App Version: {import.meta.env.VITE_APP_VERSION}
+          PR App Version: {import.meta.env.VITE_APP_VERSION}
         </p>
       </div>
       <p className="read-the-docs">
