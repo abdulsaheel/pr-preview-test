@@ -2,6 +2,15 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+ARG VITE_APP_TITLE
+ARG VITE_APP_VERSION
+ARG VITE_API_URL
+
+# Promote build args to environment variables
+ENV VITE_APP_TITLE=$VITE_APP_TITLE
+ENV VITE_APP_VERSION=$VITE_APP_VERSION
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN corepack enable && corepack prepare yarn@4.5.1 --activate
 RUN echo "nodeLinker: node-modules" > .yarnrc.yml
 
@@ -10,8 +19,7 @@ RUN yarn install
 
 COPY . .
 ENV PATH="/app/node_modules/.bin:${PATH}"
-# ✅ Capture all VITE_ envs into .env for Vite to use
-RUN printenv | grep '^VITE_' > .env && cat .env
+
 
 RUN yarn build
 
