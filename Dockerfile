@@ -10,6 +10,9 @@ RUN yarn install
 
 COPY . .
 ENV PATH="/app/node_modules/.bin:${PATH}"
+# ✅ Capture all VITE_ envs into .env for Vite to use
+RUN printenv | grep '^VITE_' > .env && cat .env
+
 RUN yarn build
 
 # 2. Serve using nginx
